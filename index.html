@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>task-at-hand</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
+
+    <style>
+      .brutalist-container {
+        position: relative;
+        width: 250px;
+        font-family: monospace;
+      }
+
+      .brutalist-input {
+        width: 100%;
+        padding: 15px;
+        font-size: 18px;
+        font-weight: bold;
+        color: #000;
+        background-color: #fff;
+        border: 4px solid #000;
+        position: relative;
+        overflow: hidden;
+        border-radius: 0;
+        outline: none;
+        transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        box-shadow: 5px 5px 0 #000, 10px 10px 0 #4a90e2;
+      }
+
+      @keyframes glitch {
+        0% {
+          transform: translate(0);
+        }
+        20% {
+          transform: translate(-2px, 2px);
+        }
+        40% {
+          transform: translate(-2px, -2px);
+        }
+        60% {
+          transform: translate(2px, 2px);
+        }
+        80% {
+          transform: translate(2px, -2px);
+        }
+        100% {
+          transform: translate(0);
+        }
+      }
+
+      .brutalist-input:focus {
+        animation: focus-pulse 4s cubic-bezier(0.25, 0.8, 0.25, 1) infinite,
+          glitch 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) infinite;
+      }
+
+      .brutalist-input:focus::after {
+        content: "";
+        position: absolute;
+        top: -2px;
+        left: -2px;
+        right: -2px;
+        bottom: -2px;
+        background: white;
+        z-index: -1;
+      }
+
+      .brutalist-input:focus::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: black;
+        z-index: -2;
+        clip-path: inset(0 100% 0 0);
+        animation: glitch-slice 4s steps(2, end) infinite;
+      }
+
+      @keyframes glitch-slice {
+        0% {
+          clip-path: inset(0 100% 0 0);
+        }
+        10% {
+          clip-path: inset(0 5% 0 0);
+        }
+        20% {
+          clip-path: inset(0 80% 0 0);
+        }
+        30% {
+          clip-path: inset(0 10% 0 0);
+        }
+        40% {
+          clip-path: inset(0 50% 0 0);
+        }
+        50% {
+          clip-path: inset(0 30% 0 0);
+        }
+        60% {
+          clip-path: inset(0 70% 0 0);
+        }
+        70% {
+          clip-path: inset(0 15% 0 0);
+        }
+        80% {
+          clip-path: inset(0 90% 0 0);
+        }
+        90% {
+          clip-path: inset(0 5% 0 0);
+        }
+        100% {
+          clip-path: inset(0 100% 0 0);
+        }
+      }
+
+      .brutalist-label {
+        position: absolute;
+        left: -3px;
+        top: -35px;
+        font-size: 14px;
+        font-weight: bold;
+        color: #fff;
+        background-color: #000;
+        padding: 5px 10px;
+        transform: rotate(-1deg);
+        z-index: 1;
+        transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      }
+
+      .brutalist-input:focus + .brutalist-label {
+        transform: rotate(0deg) scale(1.05);
+        background-color: #000000;
+      }
+
+      .smooth-type {
+        position: relative;
+        overflow: hidden;
+      }
+
+      .smooth-type::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background: linear-gradient(
+          90deg,
+          #fff 0%,
+          rgba(255, 255, 255, 0) 100%
+        );
+        z-index: 1;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+
+      .smooth-type:focus::before {
+        opacity: 1;
+        animation: type-gradient 2s linear infinite;
+      }
+
+      @keyframes type-gradient {
+        0% {
+          background-position: 300px 0;
+        }
+        100% {
+          background-position: 0 0;
+        }
+      }
+
+      .brutalist-input::placeholder {
+        color: #888;
+        transition: color 0.3s ease;
+      }
+
+      .brutalist-input:focus::placeholder {
+        color: transparent;
+      }
+
+      .brutalist-input:focus {
+        animation: focus-pulse 4s cubic-bezier(0.25, 0.8, 0.25, 1) infinite;
+      }
+
+      @keyframes focus-pulse {
+        0%,
+        100% {
+          border-color: #000;
+        }
+        50% {
+          border-color: #4a90e2;
+        }
+      }
+
+      button {
+        outline: none;
+        cursor: pointer;
+        border: none;
+        padding: 0.9rem 2rem;
+        margin: 0;
+        font-family: inherit;
+        font-size: inherit;
+        position: relative;
+        display: inline-block;
+        letter-spacing: 0.05rem;
+        font-weight: 700;
+        font-size: 17px;
+        border-radius: 500px;
+        overflow: hidden;
+        background: #66ff66;
+        color: ghostwhite;
+      }
+
+      button span {
+        position: relative;
+        z-index: 10;
+        transition: color 0.4s;
+        color: white;
+        font-weight: 500;
+        padding-top: 10px;
+        text-align: center;
+      }
+
+      button:hover span {
+        color: black;
+      }
+
+      button::before,
+      button::after {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 0;
+      }
+
+      button::before {
+        content: "";
+        background: #000;
+        width: 120%;
+        left: -10%;
+        transform: skew(30deg);
+        transition: transform 0.4s cubic-bezier(0.3, 1, 0.8, 1);
+      }
+
+      button:hover::before {
+        transform: translate3d(100%, 0, 0);
+      }
+    </style>
+  </head>
+  <body class="container sm:mx-[10%] mx-4">
+    <nav class="sm:flex sm:items-center sm:gap-36 mt-3 sm:justify-around">
+      <div class="logo sm:mb-0 mb-5"><img src="./logo.png" alt="" /></div>
+      <div class="links">
+        <ul class="sm:flex hidden sm:gap-8 sm:text-xl sm:font-medium">
+          <li class="hover:shadow-xl">About</li>
+          <li class="hover:shadow-xl">Services</li>
+          <li class="hover:shadow-xl">Prices</li>
+          <li class="hover:shadow-xl">Blog</li>
+        </ul>
+      </div>
+      <div>
+        <button><span class="p-4 m-2 text-center">Sign up</span></button>
+      </div>
+    </nav>
+    <header>
+      <div class="sm:flex sm:mt-7">
+        <div
+          class="details sm:w-[60%] mt-10 sm:mx-8 sm:gap-8 sm:flex flex-col sm:mt-20"
+        >
+          <div class="sm:text-5xl text-4xl font-semibold mb-10 sm:mb-0">
+            Streamlining your journey to digital dominance.
+          </div>
+          <div class="sm:text-2xl text-xl">
+            Streamlining your journey to digital dominance. Effortless hosting
+            solutions for a seamless online presence.
+          </div>
+          <button class="w-fit sm:mt-0 mt-7">
+            <span class="p-10 sm:text-2xl m-2 text-center "
+              >Get Started</span
+            >
+          </button>
+        </div>
+        <div class="img">
+          <img class="sm:h-[120%]" src="./img1.png" alt="" />
+        </div>
+      </div>
+
+      <div
+        class="cards sm:flex sm:gap-10 sm:mt-24 flex flex-col sm:flex-row overflow-x-scroll gap-5 flex-shrink-0: sm:w-fit w-full"
+      >
+        <div class="card1">
+          <a
+            href="#"
+            class="block sm:max-w-sm max-w-[89%] p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
+          >
+            <h5
+              class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"
+            >
+              inovations simplicity
+            </h5>
+            <p
+              class="font-normal hidden sm:block text-gray-700 dark:text-gray-400"
+            >
+              Here are the biggest enterprise technology acquisitions of 2021 so
+              far, in reverse chronological order.
+            </p>
+          </a>
+        </div>
+        <div class="card1">
+          <a
+            href="#"
+            class="block sm:max-w-sm max-w-[89%] sm:h-full p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
+          >
+            <h5
+              class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"
+            >
+              Cool designs
+            </h5>
+            <p
+              class="font-normal hidden sm:block text-gray-700 dark:text-gray-400"
+            >
+              Here are the biggest enterprise technology acquisitions of 2021 so
+              far, in reverse chronological order.
+            </p>
+          </a>
+        </div>
+
+        <div class="card2">
+          <a
+            href="#"
+            class="block sm:max-w-sm max-w-[89%] sm:h-full p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
+          >
+            <h5
+              class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"
+            >
+              moral support
+            </h5>
+            <p
+              class="font-normal hidden sm:block text-gray-700 dark:text-gray-400"
+            >
+              Here are the biggest enterprise technology acquisitions of 2021 so
+              far, in reverse chronological order.
+            </p>
+          </a>
+        </div>
+      </div>
+
+      <div class="second-header sm:flex justify-between gap-20 mt-10">
+        <div class="img">
+          <img class="sm:h-[120%] h-full" src="./imgheader2.png" alt="" />
+        </div>
+        <div
+          class="details sm:w-[60%] w-[50%] mt-10 sm:mx-8 sm:gap-8 sm:flex flex-col sm:mt-20"
+        >
+          <div class="sm:text-5xl text-2xl font-bold w-full">
+            Secure web hosting that grows with your business
+          </div>
+          <div class="sm:text-xl sm:block hidden">
+            Our secure web hosting services are designed to evolve seamlessly
+            alongside your business. With robust security measures in place,
+            including SSL encryption and regular backups, your data stays
+            protected at all times.Trust HostEase to safeguard your online
+            presence while supporting your business's growth trajectory.
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="features text-3xl font-semibold mt-20 mb-6 flex justify-center"
+      >
+        Our Features
+      </div>
+
+      <div
+        class="card-container2 flex sm:gap-4 gap-4 overflow-x-scroll flex-wrap max-[300px]:"
+      >
+        <!-- card starts here  -->
+        <div
+          class="bottom cards w-56 p-4"
+          style="border-radius: 16px; border: 1px solid black"
+        >
+          <h1 class="text-7xl font-bold">#1</h1>
+          <h3 class="text-3xl">Easy site builder</h3>
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Inventore
+          officia saepe temporibus
+        </div>
+        <!-- card starts here  -->
+
+        <!-- card starts here  -->
+        <div
+          class="bottom cards w-56 p-4"
+          style="border-radius: 16px; border: 1px solid black"
+        >
+          <h1 class="text-7xl font-bold">#2</h1>
+          <h3 class="text-3xl">Easy site builder</h3>
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Inventore
+          officia saepe temporibus
+        </div>
+        <!-- card starts here  -->
+
+        <!-- card starts here  -->
+        <div
+          class="bottom cards w-56 p-4"
+          style="border-radius: 16px; border: 1px solid black"
+        >
+          <h1 class="text-7xl font-bold">#3</h1>
+          <h3 class="text-3xl">Easy site builder</h3>
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Inventore
+          officia saepe temporibus
+        </div>
+        <!-- card starts here  -->
+
+        <!-- card starts here  -->
+        <div
+          class="bottom cards w-56 p-4"
+          style="border-radius: 16px; border: 1px solid black"
+        >
+          <h1 class="text-7xl font-bold">#4</h1>
+          <h3 class="text-3xl">Easy site builder</h3>
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Inventore
+          officia saepe temporibus
+        </div>
+        <!-- card starts here  -->
+        <!-- card starts here  -->
+        <div
+          class="bottom cards w-56 p-4"
+          style="border-radius: 16px; border: 1px solid black"
+        >
+          <h1 class="text-7xl font-bold">#5</h1>
+          <h3 class="text-3xl">Easy site builder</h3>
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Inventore
+          officia saepe temporibus
+        </div>
+        <!-- card starts here  -->
+
+        <!-- card starts here  -->
+        <div
+          class="bottom cards w-56 p-4"
+          style="border-radius: 16px; border: 1px solid black"
+        >
+          <h1 class="text-7xl font-bold">#6</h1>
+          <h3 class="text-3xl">Easy site builder</h3>
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Inventore
+          officia saepe temporibus
+        </div>
+        <!-- card starts here  -->
+
+        <!-- card starts here  -->
+        <div
+          class="bottom cards w-56 p-4"
+          style="border-radius: 16px; border: 1px solid black"
+        >
+          <h1 class="text-7xl font-bold">#7</h1>
+          <h3 class="text-3xl">Easy site builder</h3>
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Inventore
+          officia saepe temporibus
+        </div>
+        <!-- card starts here  -->
+
+        <!-- card starts here  -->
+        <div
+          class="bottom cards w-56 p-4"
+          style="border-radius: 16px; border: 1px solid black"
+        >
+          <h1 class="text-7xl font-bold">#8</h1>
+          <h3 class="text-3xl">Easy site builder</h3>
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Inventore
+          officia saepe temporibus
+        </div>
+        <!-- card starts here  -->
+      </div>
+    </header>
+
+    <div
+      class="mid-footeer flex items-center justify-between sm:mx-24 sm:mt-10"
+    >
+      <div class="text-2xl sm:w-[60%] hidden sm:block">
+        Sign up for the best web hosting service today!
+      </div>
+      <div class="inputie sm:mt-0 mt-16">
+        <div class="brutalist-container">
+          <input
+            placeholder="TYPE HERE"
+            class="brutalist-input smooth-type"
+            type="text"
+          />
+          <label class="brutalist-label">Ener your email</label>
+        </div>
+      </div>
+    </div>
+    <footer class="mt-20 flex items-center justify-between">
+      <div class="left h-full w-[40%]">
+        <div class="img">
+          <img src="footer logo.png" alt="" />
+          <p class="mt-10 text-xl hidden sm:block">
+            Our vision is to empower individuals and businesses to thrive online
+            by providing effortless hosting solutions. We aim to streamline the
+            journey to digital success, making it accessible to all.
+          </p>
+          <h6 class="mt-5 font-thin">@ 2024 Host Ease All Rights Reserved</h6>
+        </div>
+      </div>
+      <div class="right flex sm:gap-20 gap-10 py-20 mx-32">
+        <div class="font-semibold">
+          Quick menu
+          <ul class="font-normal flex flex-col sm:gap-2 gap-5">
+            <li>about</li>
+            <li>Services</li>
+            <li>Priceing</li>
+            <li>Blog</li>
+          </ul>
+        </div>
+        <div class="font-semibold sm:block hidden">
+          Resources
+          <ul class="font-normal">
+            <li>about</li>
+            <li>Services</li>
+            <li>Priceing</li>
+            <li>Blog</li>
+          </ul>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
